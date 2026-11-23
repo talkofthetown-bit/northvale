@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Northvale Advisory</title>
+<!-- Concept site for a fictional advisory firm. All names, figures and articles are sample content. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #051C2C;
+    --blue: #0B3B8C;
+    --electric: #2251FF;
+    --sky: #A8C7FA;
+    --mist: #EEF3FB;
+    --ink: #0F1B2D;
+    --muted: #55637A;
+    --line: #D5DEEC;
+    --white: #FFFFFF;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--white); color: var(--ink); font: 400 1.0625rem/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--white); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; letter-spacing: -0.015em; line-height: 1.08; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 3px solid var(--electric); outline-offset: 3px; }
+  .wrap { max-width: 1200px; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 5.5rem; }
+  .eyebrow { font: 600 .75rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--electric); }
+  .arrow-link { display: inline-flex; align-items: center; gap: .6rem; font: 600 .95rem var(--sans); text-decoration: none; color: var(--electric); }
+  .arrow-link::after { content: ""; width: 34px; height: 34px; border-radius: 50%; background: var(--electric) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10h9m-4-4l4 4-4 4' fill='none' stroke='white' stroke-width='1.8'/%3E%3C/svg%3E") center / 18px no-repeat; transition: transform .2s; }
+  .arrow-link:hover::after { transform: translateX(4px); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; font: 600 .95rem var(--sans); text-decoration: none; padding: 1rem 1.9rem; background: var(--electric); color: var(--white); border: 0; border-radius: 0; cursor: pointer; transition: background .2s; }
+  .btn:hover { background: var(--blue); }
+  .btn.ghost { background: transparent; border: 1.5px solid currentColor; }
+  .btn.ghost:hover { background: var(--white); color: var(--navy); }
+
+  /* Header */
+  header.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--white); border-bottom: 1px solid var(--line); }
+  .nav-in { max-width: 1200px; margin-inline: auto; padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px)); height: 68px; display: flex; align-items: center; gap: 2.4rem; }
+  .brand { font: 600 1.55rem var(--serif); letter-spacing: -0.02em; text-decoration: none; color: var(--navy); display: flex; align-items: center; gap: .6rem; }
+  .brand i { width: 22px; height: 22px; background: var(--electric); display: block; clip-path: polygon(0 100%, 0 0, 30% 0, 100% 70%, 100% 100%, 70% 100%, 0 30%); }
+  .links { display: flex; gap: 1.8rem; margin-left: 1rem; }
+  .links a { font: 500 .93rem var(--sans); text-decoration: none; color: var(--ink); padding: 1.4rem 0; border-bottom: 2px solid transparent; }
+  .links a:hover { border-color: var(--electric); }
+  .nav .btn { margin-left: auto; padding: .7rem 1.3rem; font-size: .88rem; }
+
+  /* Hero */
+  .hero { background: var(--navy); color: var(--white); position: relative; overflow: hidden; }
+  .hero svg.bg { position: absolute; right: -5%; top: 0; height: 100%; width: 62%; opacity: .95; }
+  .hero .wrap { position: relative; padding-block: 7.5rem 7rem; }
+  .hero h1 { font-size: clamp(2.8rem, 7vw, 5.6rem); max-width: 14ch; }
+  .hero h1 em { font-style: italic; color: var(--sky); }
+  .hero p.lead { margin-top: 1.8rem; max-width: 46ch; font-size: 1.25rem; line-height: 1.5; color: #C9D6EA; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.6rem; }
+  .hero .eyebrow { color: var(--sky); display: block; margin-bottom: 1.6rem; }
+
+  /* Numbers */
+  .nums { background: var(--electric); color: var(--white); }
+  .nums .wrap { padding-block: 3.2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .num b { display: block; font: 500 clamp(2.4rem, 5vw, 3.6rem)/1 var(--serif); letter-spacing: -0.02em; }
+  .num span { display: block; margin-top: .6rem; font-size: .93rem; color: #DCE6FF; max-width: 22ch; }
+
+  /* Insights */
+  .sec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.5rem; margin-bottom: 3rem; }
+  .sec-head h2 { font-size: clamp(2.1rem, 4.4vw, 3.2rem); max-width: 16ch; }
+  .feature { display: grid; grid-template-columns: 1.3fr 1fr; background: var(--mist); }
+  .feature .art { min-height: 360px; background: var(--blue); position: relative; overflow: hidden; }
+  .feature .art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .feature .txt { padding: clamp(1.6rem, 4vw, 3.2rem); display: flex; flex-direction: column; justify-content: center; gap: 1.2rem; min-width: 0; }
+  .feature h3 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+  .feature p { color: var(--muted); }
+  .meta { font: 500 .8rem var(--sans); color: var(--muted); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
+  .card { border-top: 3px solid var(--navy); padding-top: 1.2rem; display: flex; flex-direction: column; gap: .9rem; min-width: 0; text-decoration: none; transition: border-color .2s; }
+  .card:hover { border-color: var(--electric); }
+  .card:hover h3 { color: var(--electric); }
+  .card h3 { font-size: 1.5rem; line-height: 1.15; transition: color .2s; }
+  .card p { color: var(--muted); font-size: .98rem; }
+
+  /* Capabilities */
+  .caps { background: var(--mist); }
+  .caps-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 4rem; }
+  .caps-grid h2 { font-size: clamp(2.1rem, 4.4vw, 3.2rem); }
+  .caps-grid .intro { margin-top: 1.4rem; color: var(--muted); max-width: 38ch; }
+  .list { border-top: 1px solid var(--navy); }
+  .list details { border-bottom: 1px solid var(--line); }
+  .list summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 0; font: 500 1.55rem var(--serif); letter-spacing: -0.01em; }
+  .list summary::-webkit-details-marker { display: none; }
+  .list summary::after { content: "+"; font: 300 2rem/1 var(--sans); color: var(--electric); transition: transform .2s; }
+  .list details[open] summary::after { content: "\2212"; }
+  .list summary:hover { color: var(--electric); }
+  .list details p { padding: 0 3rem 1.6rem 0; color: var(--muted); max-width: 52ch; }
+
+  /* Industries */
+  .inds { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .ind { background: var(--white); padding: 1.8rem 1.4rem 2rem; min-height: 170px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; transition: background .2s, color .2s; }
+  .ind:hover { background: var(--navy); color: var(--white); }
+  .ind b { font: 500 1.4rem/1.15 var(--serif); }
+  .ind span { font: 600 .75rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--electric); }
+  .ind:hover span { color: var(--sky); }
+
+  /* Quote band */
+  .quote { background: var(--navy); color: var(--white); }
+  .quote .wrap { padding-block: 6rem; max-width: 980px; }
+  .quote blockquote { margin: 0; font: 400 clamp(1.7rem, 3.6vw, 2.6rem)/1.25 var(--serif); letter-spacing: -0.01em; }
+  .quote cite { display: block; margin-top: 1.8rem; font: 500 .9rem var(--sans); color: var(--sky); font-style: normal; }
+
+  /* Careers + Contact */
+  .careers .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .careers h2 { font-size: clamp(2.1rem, 4.4vw, 3.2rem); }
+  .careers p { margin: 1.4rem 0 2rem; color: var(--muted); max-width: 42ch; }
+  .roles { border-top: 1px solid var(--navy); }
+  .roles a { display: flex; justify-content: space-between; gap: 1rem; padding: 1.3rem 0; border-bottom: 1px solid var(--line); text-decoration: none; font: 500 1.3rem var(--serif); }
+  .roles a small { font: 500 .85rem var(--sans); color: var(--muted); align-self: center; white-space: nowrap; }
+  .roles a:hover { color: var(--electric); }
+
+  .contact { background: var(--mist); }
+  .contact .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 4rem; }
+  .contact h2 { font-size: clamp(2.1rem, 4.4vw, 3.2rem); }
+  .contact .intro { margin-top: 1.4rem; color: var(--muted); max-width: 36ch; }
+  form { display: grid; gap: 1.4rem; background: var(--white); padding: clamp(1.4rem, 4vw, 2.6rem); border-top: 4px solid var(--electric); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  label { display: block; font: 600 .78rem var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--navy); margin-bottom: .45rem; }
+  input, select, textarea { width: 100%; font: 400 1rem var(--sans); color: var(--ink); background: var(--white); border: 1px solid #B6C3D8; border-radius: 0; padding: .85rem .9rem; }
+  textarea { min-height: 120px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--electric); outline-offset: 0; border-color: var(--electric); }
+  .hp { position: absolute; left: -9999px; }
+  .err { color: #B3261E; font-weight: 600; }
+  .done { background: var(--white); padding: 3rem 2rem; border-top: 4px solid var(--electric); }
+  .done h3 { font-size: 2rem; margin-bottom: .8rem; }
+  .done p { color: var(--muted); }
+
+  footer { background: var(--navy); color: #AFC0DA; }
+  footer .wrap { padding-block: 3.5rem 2.5rem; }
+  .fgrid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; }
+  footer .brand { color: var(--white); }
+  footer h4 { margin: 0 0 1rem; font: 600 .75rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--white); }
+  footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; font-size: .95rem; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--white); text-decoration: underline; }
+  .fine { margin-top: 3rem; padding-top: 1.6rem; border-top: 1px solid #1B3550; font-size: .85rem; display: flex; flex-wrap: wrap; gap: .6rem 2rem; justify-content: space-between; }
+  footer :focus-visible { outline-color: var(--sky); }
+  section[id] { scroll-margin-top: 70px; }
+
+  [data-reveal] { transition: opacity .6s ease, transform .6s ease; }
+  [data-reveal].pre { opacity: .2; transform: translateY(18px); }
+  [data-reveal].pre.in { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .wrap { padding-block: 4rem; }
+    .links { display: none; }
+    .hero .wrap { padding-block: 4.5rem 4.5rem; }
+    .hero svg.bg { width: 130%; right: -45%; opacity: .45; }
+    .nums .wrap { grid-template-columns: 1fr 1fr; padding-block: 2.6rem; }
+    .feature { grid-template-columns: 1fr; }
+    .feature .art { min-height: 220px; }
+    .cards { grid-template-columns: 1fr; gap: 2.2rem; }
+    .caps-grid, .careers .wrap, .contact .wrap { grid-template-columns: 1fr; gap: 2.6rem; }
+    .inds { grid-template-columns: 1fr 1fr; }
+    .fgrid { grid-template-columns: 1fr 1fr; }
+    .fgrid > :first-child { grid-column: 1 / -1; }
+    .two { grid-template-columns: 1fr; }
+    .list details p { padding-right: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    [data-reveal] { transition: none; }
+    [data-reveal].pre { opacity: 1; transform: none; }
+  }
+
+  .list details .more { margin: -.6rem 0 1.6rem; }
+  /* Inner pages */
+  .crumbs { font: 500 .85rem var(--sans); color: var(--muted); margin-bottom: 2rem; }
+  .crumbs a { color: var(--electric); text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .pg-hero { background: var(--navy); color: var(--white); position: relative; overflow: hidden; }
+  .pg-hero .wrap { padding-block: 4.5rem 5rem; position: relative; }
+  .pg-hero .crumbs, .pg-hero .crumbs a { color: var(--sky); }
+  .pg-hero h1 { font-size: clamp(2.4rem, 5.6vw, 4.4rem); max-width: 18ch; margin-top: 1rem; }
+  .pg-hero .lead { margin-top: 1.6rem; max-width: 52ch; font-size: 1.2rem; line-height: 1.5; color: #C9D6EA; }
+  .pg-hero svg { position: absolute; right: -4%; top: 0; height: 100%; width: 46%; opacity: .8; }
+  .art-hero { background: var(--navy); color: var(--white); }
+  .art-hero .wrap { padding-block: 3.5rem 3.5rem; max-width: 980px; }
+  .art-hero .crumbs, .art-hero .crumbs a { color: var(--sky); }
+  .art-hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin-top: 1rem; }
+  .art-hero .by { margin-top: 1.6rem; font: 500 .9rem var(--sans); color: var(--sky); }
+  .art-fig { max-width: 980px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-left, 0px)); transform: translateY(-1.5rem); }
+  .art-fig svg { width: 100%; height: auto; display: block; }
+  .prose { max-width: 720px; margin: 0 auto; padding: 1rem max(20px, env(safe-area-inset-left, 0px)) 3rem; }
+  .prose p { font: 400 1.25rem/1.7 var(--serif); margin-bottom: 1.5rem; }
+  .prose h2 { font-size: 1.9rem; margin: 2.6rem 0 1rem; }
+  .prose blockquote { margin: 2.4rem 0; padding-left: 1.6rem; border-left: 4px solid var(--electric); font: 400 1.7rem/1.3 var(--serif); color: var(--navy); }
+  .takeaways { background: var(--mist); border-top: 4px solid var(--electric); padding: 1.8rem 2rem; margin: 2.4rem 0; }
+  .takeaways h3 { font: 600 .78rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--electric); margin-bottom: 1rem; }
+  .takeaways ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; font-size: 1.02rem; }
+  .cta-band { background: var(--electric); color: var(--white); }
+  .cta-band .wrap { padding-block: 3.4rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between; }
+  .cta-band h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); max-width: 22ch; }
+  .cta-band .btn { background: var(--white); color: var(--navy); }
+  .cta-band .btn:hover { background: var(--navy); color: var(--white); }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .three > div { border-top: 3px solid var(--navy); padding-top: 1.2rem; }
+  .three h3 { font-size: 1.45rem; margin-bottom: .7rem; }
+  .three p { color: var(--muted); font-size: .98rem; }
+  .steps { counter-reset: s; border-top: 1px solid var(--navy); }
+  .steps li { list-style: none; counter-increment: s; display: grid; grid-template-columns: 56px 1fr; gap: 1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
+  .steps li::before { content: "0" counter(s); font: 500 1.5rem var(--serif); color: var(--electric); }
+  .steps { margin: 0; padding: 0; }
+  .two-col { display: grid; grid-template-columns: .8fr 1.2fr; gap: 4rem; }
+  .two-col h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
+  .sample { background: var(--mist); padding: 2rem 2.2rem; border-left: 4px solid var(--electric); }
+  .sample b { display: block; font: 600 .75rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--electric); margin-bottom: .7rem; }
+  .sample p { font: 400 1.25rem/1.5 var(--serif); }
+  .rel-head { font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom: 1.6rem; }
+  .all-list { border-top: 1px solid var(--navy); }
+  .all-list a { display: grid; grid-template-columns: 150px 1fr auto; gap: 1.5rem; align-items: baseline; padding: 1.6rem 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+  .all-list a:hover h3 { color: var(--electric); }
+  .all-list h3 { font-size: 1.7rem; transition: color .2s; }
+  .all-list p { color: var(--muted); margin-top: .4rem; font-size: .98rem; }
+  @media (max-width: 900px) {
+    .three { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .all-list a { grid-template-columns: 1fr; gap: .4rem; }
+    .pg-hero svg { opacity: .3; width: 90%; }
+    .prose p { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top" aria-label="Northvale Advisory, home"><i></i>Northvale</a>
+    <nav class="links" aria-label="Main">
+      <a href="#insights">Insights</a>
+      <a href="#capabilities">What we do</a>
+      <a href="#industries">Industries</a>
+      <a href="#careers">Careers</a>
+    </nav>
+    <a class="btn" href="#contact">Contact us</a>
+  </div>
+</header>
+
+<main id="top">
+<div id="home">
+  <section class="hero">
+    <svg class="bg" viewBox="0 0 600 600" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#2251FF" stroke-width="1.2" opacity=".55">
+        <path d="M0 520 L600 80"/><path d="M0 560 L600 160"/><path d="M0 600 L600 240"/><path d="M60 600 L600 320"/>
+        <path d="M0 480 L600 0"/><path d="M0 440 L520 0"/><path d="M0 400 L440 0"/>
+      </g>
+      <polygon points="600,80 600,600 150,600" fill="#0B3B8C" opacity=".55"/>
+      <polygon points="600,240 600,600 330,600" fill="#2251FF" opacity=".55"/>
+      <polygon points="600,420 600,600 470,600" fill="#A8C7FA" opacity=".8"/>
+    </svg>
+    <div class="wrap">
+      <span class="eyebrow">Strategy and transformation</span>
+      <h1>Clear answers for <em>complicated</em> decisions.</h1>
+      <p class="lead">We work with boards and leadership teams on the choices that decide the next ten years. Then we stay until they work.</p>
+      <div class="cta">
+        <a class="btn" href="#contact">Talk to a partner</a>
+        <a class="btn ghost" href="#insights">Read our latest thinking</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="nums" aria-label="The firm in numbers">
+    <div class="wrap">
+      <div class="num"><b>28</b><span>years advising leadership teams</span></div>
+      <div class="num"><b>40</b><span>countries with active work</span></div>
+      <div class="num"><b>1,200</b><span>advisors and specialists</span></div>
+      <div class="num"><b>9 in 10</b><span>clients come back for a second engagement</span></div>
+    </div>
+  </section>
+
+  <section id="insights">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div><span class="eyebrow">Our insights</span><h2 style="margin-top:.9rem">What we are thinking about now</h2></div>
+        <a class="arrow-link" href="#all-insights">All insights</a>
+      </div>
+      <article class="feature" data-reveal>
+        <div class="art" aria-hidden="true">
+          <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice"><rect width="400" height="360" fill="#0B3B8C"/><g fill="none" stroke="#A8C7FA" stroke-width="1" opacity=".5"><path d="M0 300H400M0 240H400M0 180H400M0 120H400M0 60H400"/></g><polyline points="20,300 90,260 150,270 210,190 280,150 340,80 385,50" fill="none" stroke="#fff" stroke-width="4"/><polygon points="20,300 90,260 150,270 210,190 280,150 340,80 385,50 385,360 20,360" fill="#2251FF" opacity=".6"/><circle cx="340" cy="80" r="9" fill="#fff"/></svg>
+        </div>
+        <div class="txt">
+          <span class="eyebrow">Featured report</span>
+          <h3>The next decade belongs to companies that can reinvent their cost base</h3>
+          <p>Most cost programs fade within two years. We looked at what the few that last have in common, and what leaders can do in the first 100 days.</p>
+          <div class="meta">Report &middot; 18 minute read</div>
+          <a class="arrow-link" href="#a-cost">Read the report</a>
+        </div>
+      </article>
+      <div class="cards">
+        <a class="card" href="#a-growth" data-reveal><span class="eyebrow">Strategy</span><h3>Why growth plans stall in year three</h3><p>The gap between a great strategy deck and a funded, owned plan.</p><span class="meta">Article &middot; 7 minute read</span></a>
+        <a class="card" href="#a-ai" data-reveal><span class="eyebrow">Technology</span><h3>What a useful AI roadmap actually looks like</h3><p>Fewer pilots, clearer owners, and one number the CFO believes.</p><span class="meta">Article &middot; 9 minute read</span></a>
+        <a class="card" href="#a-leadership" data-reveal><span class="eyebrow">Organization</span><h3>The leadership team is the strategy</h3><p>How top teams make faster calls with less friction and fewer meetings.</p><span class="meta">Podcast &middot; 31 minutes</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="capabilities" class="caps">
+    <div class="wrap caps-grid">
+      <div data-reveal>
+        <span class="eyebrow">What we do</span>
+        <h2 style="margin-top:.9rem">Six ways we help</h2>
+        <p class="intro">Every engagement is led by a partner and built around one question the client needs answered.</p>
+      </div>
+      <div class="list" data-reveal>
+        <details open><summary>Corporate strategy</summary><p>Where to play, how to win and what to stop doing. We build the plan with your team, so it survives contact with Monday morning.</p><a class="arrow-link more" href="#s-strategy">Learn more</a></details>
+        <details><summary>Operations and performance</summary><p>Lower cost, faster cycle times, better service levels. We set targets that finance signs off on and operations can hit.</p><a class="arrow-link more" href="#s-operations">Learn more</a></details>
+        <details><summary>Digital and AI</summary><p>From the first use case to the platform behind it. We focus on the few bets that move revenue or margin.</p><a class="arrow-link more" href="#s-digital">Learn more</a></details>
+        <details><summary>Mergers and acquisitions</summary><p>Diligence, deal design and the first 100 days after close, where most of the value is won or lost.</p><a class="arrow-link more" href="#s-mergers">Learn more</a></details>
+        <details><summary>Organization and talent</summary><p>Structure, leadership and culture, designed around the strategy instead of the org chart you inherited.</p><a class="arrow-link more" href="#s-organization">Learn more</a></details>
+        <details><summary>Sustainability</summary><p>A practical path to lower emissions and lower cost at the same time, with a clear business case for each step.</p><a class="arrow-link more" href="#s-sustainability">Learn more</a></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="industries">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><div><span class="eyebrow">Industries</span><h2 style="margin-top:.9rem">Deep expertise where it counts</h2></div></div>
+      <div class="inds" data-reveal>
+        <a class="ind" href="#i-financial-services"><span>01</span><b>Financial services</b></a>
+        <a class="ind" href="#i-healthcare"><span>02</span><b>Healthcare and life sciences</b></a>
+        <a class="ind" href="#i-energy"><span>03</span><b>Energy and materials</b></a>
+        <a class="ind" href="#i-consumer"><span>04</span><b>Consumer and retail</b></a>
+        <a class="ind" href="#i-technology"><span>05</span><b>Technology and media</b></a>
+        <a class="ind" href="#i-industrials"><span>06</span><b>Industrials</b></a>
+        <a class="ind" href="#i-public-sector"><span>07</span><b>Public sector</b></a>
+        <a class="ind" href="#i-private-capital"><span>08</span><b>Private capital</b></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="wrap" data-reveal>
+      <blockquote>&ldquo;We do not hand over a report and leave. We sit next to your team until the number moves.&rdquo;</blockquote>
+      <cite>Our promise to every client</cite>
+    </div>
+  </section>
+
+  <section id="careers" class="careers">
+    <div class="wrap">
+      <div data-reveal>
+        <span class="eyebrow">Careers</span>
+        <h2 style="margin-top:.9rem">Do the work you would be proud to explain to your family</h2>
+        <p>Small teams, real responsibility and mentors who actually have time for you. Join us as an analyst, an expert or a partner.</p>
+        <a class="arrow-link" href="#contact">Start a conversation</a>
+      </div>
+      <div class="roles" data-reveal>
+        <a href="#contact">Business analyst <small>Lahore &middot; London</small></a>
+        <a href="#contact">Associate <small>Dubai &middot; Singapore</small></a>
+        <a href="#contact">Data and AI specialist <small>Remote</small></a>
+        <a href="#contact">Engagement manager <small>London</small></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div data-reveal>
+        <span class="eyebrow">Contact us</span>
+        <h2 style="margin-top:.9rem">Tell us what you are working through</h2>
+        <p class="intro">A partner will reply within two working days. No sales script, just a first conversation.</p>
+      </div>
+      <div data-reveal>
+        <form id="form" action="#" method="post" novalidate>
+          <div class="two">
+            <div><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required></div>
+            <div><label for="company">Organization</label><input id="company" name="company" autocomplete="organization" required></div>
+          </div>
+          <div class="two">
+            <div><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+            <div><label for="topic">Topic</label><select id="topic" name="topic"><option>Strategy</option><option>Operations</option><option>Digital and AI</option><option>M&amp;A</option><option>Organization</option><option>Sustainability</option><option>Something else</option></select></div>
+          </div>
+          <div><label for="msg">How can we help?</label><textarea id="msg" name="msg" required></textarea></div>
+          <div class="hp" aria-hidden="true"><label>Leave empty <input name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+          <p class="err" id="err" role="alert" hidden>Please fill in every field with a valid email.</p>
+          <div><button class="btn" id="send" type="submit">Send message</button></div>
+        </form>
+        <div class="done" id="done" hidden tabindex="-1"><h3>Thank you, <span id="who"></span>.</h3><p>A partner will reply to <b id="addr"></b> within two working days.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="page" hidden></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="brand" href="#top"><i></i>Northvale</a><p style="margin-top:1rem;max-width:30ch;font-size:.95rem">Strategy and transformation advisory for leadership teams.</p></div>
+      <div><h4>Firm</h4><ul><li><a href="#capabilities">What we do</a></li><li><a href="#industries">Industries</a></li><li><a href="#careers">Careers</a></li></ul></div>
+      <div><h4>Ideas</h4><ul><li><a href="#insights">Insights</a></li><li><a href="#insights">Reports</a></li><li><a href="#insights">Podcast</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="#contact">Talk to a partner</a></li><li><a href="#contact">Media enquiries</a></li></ul></div>
+    </div>
+    <div class="fine"><span>&copy; 2026 Northvale Advisory. A fictional firm for a concept project.</span><span>Website design by <a href="https://lizgraphicdesign.com" target="_blank" rel="noopener">Liz Graphic Design</a></span></div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Paste your form service URL here (for example https://formspree.io/f/abcdxyz). Until then the form only shows the thank you message.
+    var FORM_ENDPOINT = "";
+    var $ = function (s) { return document.querySelector(s); };
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var form = $('#form'), send = $('#send'), err = $('#err');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { err.hidden = false; form.reportValidity(); return; }
+      err.hidden = true; send.disabled = true; send.textContent = 'Sending...';
+      var data = new FormData(form);
+      var go = FORM_ENDPOINT ? fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } }).then(function (r) { if (!r.ok) throw 0; }) : Promise.resolve();
+      go.then(function () {
+        $('#who').textContent = (data.get('name') || '').toString().trim().split(/\s+/)[0] || 'friend';
+        $('#addr').textContent = data.get('email');
+        form.hidden = true; var d = $('#done'); d.hidden = false; d.focus({ preventScroll: true });
+      }).catch(function () { err.textContent = 'Something went wrong. Please try again.'; err.hidden = false; send.disabled = false; send.textContent = 'Send message'; });
+    });
+
+    // ---------- Pages ----------
+    var ARTICLES = {
+      cost: { tag: 'Report', kind: 'Report', time: '18 minute read', title: 'The next decade belongs to companies that can reinvent their cost base',
+        dek: 'Most cost programs fade within two years. We looked at what the few that last have in common.',
+        body: [
+          'Every large company has run a cost program. Very few have kept the savings. In our review of 60 programs across eight industries, more than half of the gains had leaked back into the cost base within 24 months.',
+          'The pattern is familiar. A target is set from the top, each function finds its share, and the work gets done through hiring freezes and travel bans. It looks like progress. It is mostly delay.',
+          ['quote','The programs that last change how work gets done, not how much of it gets cut.'],
+          ['h','Start with demand, not budgets'],
+          'Lasting programs begin by asking why the work exists. They trace cost back to the decision, the product or the customer promise that created it, and then they change that decision. A budget cut only moves the cost somewhere else.',
+          ['h','Give one person the number'],
+          'In the programs that held, a single named leader owned the total result and reported it every month next to revenue. Savings that sit in a separate tracker are the first to disappear.',
+          ['h','Plan the first 100 days'],
+          'The first 100 days set the tone. Leaders who fixed the baseline in week two, signed off on the first ten moves by day 30 and had the first savings in the books by day 90 were far more likely to finish the job.'
+        ],
+        take: ['Trace cost to the decisions that create it.', 'Name one owner for the total number.', 'Lock the baseline in the first two weeks.'] },
+      growth: { tag: 'Strategy', kind: 'Article', time: '7 minute read', title: 'Why growth plans stall in year three',
+        dek: 'The gap between a great strategy deck and a funded, owned plan.',
+        body: [
+          'Year one of a growth plan is exciting. Year two is busy. Year three is where most plans quietly stop. The targets are still on the wall, but the budget has moved on and the owners have changed jobs.',
+          'We see three causes again and again. The plan was never connected to the annual budget. Nobody below the executive team can say what they should do differently on Monday. And the metrics measure activity instead of results.',
+          ['quote','A plan that nobody owns is a presentation.'],
+          ['h','Fund the plan like a product'],
+          'Treat each growth initiative like a product with a team, a budget and a stage gate. Release money in steps and stop the ones that miss. Leaders find this uncomfortable for about a quarter, and then they will not go back.',
+          ['h','Make it local'],
+          'Break the strategy into three to five choices a regional manager can act on without asking permission. If the plan needs a translator, it will not travel.'
+        ],
+        take: ['Tie every initiative to a budget line.', 'Turn strategy into three to five local choices.', 'Review results, not activity, every quarter.'] },
+      ai: { tag: 'Technology', kind: 'Article', time: '9 minute read', title: 'What a useful AI roadmap actually looks like',
+        dek: 'Fewer pilots, clearer owners, and one number the CFO believes.',
+        body: [
+          'Most companies now have a long list of AI pilots. Few have a roadmap. The difference is simple: a roadmap says which three things will be live by the end of the year, who owns each, and what each is worth.',
+          'We recommend starting from the work, not the tool. Pick the five processes where speed or quality drives the most money, and test whether a model can do part of the job today.',
+          ['quote','If the finance team cannot repeat the business case, it is not a business case.'],
+          ['h','Pick a few and go deep'],
+          'Teams that scale one use case to the whole business learn more than teams that run twelve pilots. The hard parts are data access, process change and training, and they only show up at scale.',
+          ['h','Measure one number'],
+          'Agree one financial measure per use case with the CFO before any build starts. Hours saved is not a measure. Cost per case, win rate or days to cash is.'
+        ],
+        take: ['Choose three use cases, not thirty.', 'Assign a business owner, not just a tech owner.', 'Agree the value measure with finance first.'] },
+      leadership: { tag: 'Organization', kind: 'Podcast', time: '31 minutes', title: 'The leadership team is the strategy',
+        dek: 'How top teams make faster calls with less friction and fewer meetings.',
+        body: [
+          'In this episode, two of our partners talk about what separates leadership teams that decide quickly from those that circle. The short answer is that it has little to do with talent and a lot to do with how the team works.',
+          'The best teams agree in advance who decides what. They separate the decisions that need all of them from the ones that only need one. And they treat a disagreement in the room as useful, not as a risk.',
+          ['quote','Speed is a habit the team builds, not a trait the CEO has.'],
+          ['h','What we cover'],
+          'The three questions every leadership team should answer each year, how to run a meeting that ends with a decision, and why the first 90 days of a new CEO matter more than the next three years.'
+        ],
+        take: ['Write down who decides what.', 'Cut the agenda to the decisions that need everyone.', 'Review how the team works twice a year.'] }
+    };
+    var AKEYS = ['cost', 'growth', 'ai', 'leadership'];
+
+    var INDS = {
+      'financial-services': { n: 'Financial services', lead: 'Banks, insurers and asset managers face rising costs, new competitors and customers who expect everything in an app.',
+        see: [['Margin pressure','Rates, regulation and fintech rivals are squeezing the profit on core products.'],['Legacy technology','Decades of systems slow every change, from a new product to a new rule.'],['Trust and risk','Fraud, conduct and resilience rules keep getting tougher.']],
+        help: ['Rebuild the cost base around digital service.','Modernize core platforms without a risky big bang.','Design risk and compliance into the customer journey.'],
+        sample: 'A mid-size bank cut its cost to serve by 22 percent by redesigning how loans are approved, without cutting a single branch.', rel: ['cost','ai'] },
+      'healthcare': { n: 'Healthcare and life sciences', lead: 'Providers, payers and pharma companies are under pressure to deliver better outcomes for less, and faster.',
+        see: [['Capacity','Staff shortages and rising demand stretch every part of the system.'],['Faster science','Drug development is quicker but pipelines are harder to prioritize.'],['Data use','The value is in the data, but access and privacy rules slow it down.']],
+        help: ['Plan capacity and staffing around real demand.','Focus R&D portfolios on the few bets that pay off.','Build a data strategy that clinicians and regulators trust.'],
+        sample: 'A hospital group freed up 14 percent more operating theater time by changing how cases are scheduled.', rel: ['cost','ai'] },
+      'energy': { n: 'Energy and materials', lead: 'Energy and materials businesses are making large, long-lived bets while prices, policy and technology keep moving.',
+        see: [['The transition','Investors want a credible path to lower emissions and strong returns.'],['Volatile markets','Prices swing, and so do margins, project timelines and capital plans.'],['Asset performance','Older assets must run safer and cheaper for longer.']],
+        help: ['Build a capital plan that holds up across price scenarios.','Raise asset uptime with better maintenance planning.','Find the lowest-cost route to lower emissions.'],
+        sample: 'A materials producer raised plant output by 9 percent by changing the maintenance schedule, with no new equipment.', rel: ['cost','growth'] },
+      'consumer': { n: 'Consumer and retail', lead: 'Consumer brands and retailers are fighting for attention, loyalty and margin in a market that changes every season.',
+        see: [['Shifting habits','Shoppers move between channels, brands and price points more than ever.'],['Cost to serve','Delivery, returns and promotions eat into profit.'],['Private label','Own brands keep winning share in everyday categories.']],
+        help: ['Sharpen the brand portfolio and pricing.','Cut cost to serve without hurting the experience.','Use data to plan range and stock store by store.'],
+        sample: 'A grocery chain improved margin by 1.5 points by resetting its range in 300 stores.', rel: ['growth','ai'] },
+      'technology': { n: 'Technology and media', lead: 'Technology and media companies need to grow fast, stay profitable and keep their best people.',
+        see: [['Growth with discipline','Investors now ask for profit as well as growth.'],['Platform shifts','New technology can reset a market in a single year.'],['Talent','The best builders have choices, so culture matters as much as pay.']],
+        help: ['Find the next growth engine and fund it properly.','Set up the organization to ship faster.','Plan partnerships and acquisitions with a clear thesis.'],
+        sample: 'A software company reorganized around three product lines and cut release time from 12 weeks to 5.', rel: ['ai','leadership'] },
+      'industrials': { n: 'Industrials', lead: 'Manufacturers and infrastructure businesses are rebuilding supply chains and factories for a new era.',
+        see: [['Supply chains','Disruption is the norm, and resilience now has a price.'],['Automation','Factories that automate well gain cost and quality advantages.'],['Services','The best margins are moving from products to long-term service.']],
+        help: ['Redesign the footprint and supplier base.','Plan automation where it pays back fastest.','Build a services business next to the product.'],
+        sample: 'An equipment maker added 6 points of margin by turning one-off repairs into a service contract.', rel: ['cost','growth'] },
+      'public-sector': { n: 'Public sector', lead: 'Governments and agencies are being asked to deliver more for citizens with tight budgets and high expectations.',
+        see: [['Service demand','People expect public services to feel as simple as private ones.'],['Budget limits','Funding is flat while needs keep rising.'],['Delivery risk','Big programs often run late and over budget.']],
+        help: ['Redesign services around the citizen journey.','Set up delivery teams that finish what they start.','Make budgets transparent and tied to results.'],
+        sample: 'A national agency cut the time to process a benefits claim from 40 days to 9.', rel: ['leadership','ai'] },
+      'private-capital': { n: 'Private capital', lead: 'Investors need sharp diligence and a clear plan to create value, from the first week of ownership.',
+        see: [['Higher entry prices','Returns now depend more on improving the business than on buying well.'],['Faster exits','Buyers want proof, so the plan must show results early.'],['Portfolio focus','Operating teams are stretched across many companies.']],
+        help: ['Run diligence that tests the plan, not just the numbers.','Build a 100-day plan for each new holding.','Support portfolio leaders with a small, senior operating team.'],
+        sample: 'A fund lifted EBITDA at a new holding by 18 percent in its first year with a focused 100-day plan.', rel: ['cost','leadership'] }
+    };
+    var IKEYS = Object.keys(INDS);
+
+    var SERV = {
+      strategy: { n: 'Corporate strategy', lead: 'Where to play, how to win and what to stop doing.',
+        steps: [['Frame the choice','We agree the one decision that matters most and what a good answer looks like.'],['Test the options','Facts, customer insight and honest debate, in weeks instead of months.'],['Fund and launch','A plan with owners, budgets and the first 100 days written out.']],
+        out: 'A strategy your leaders can explain in one minute and your teams can act on the next day.' },
+      operations: { n: 'Operations and performance', lead: 'Lower cost, faster cycle times and better service.',
+        steps: [['Find the gap','We measure where time and money go and compare it with the best.'],['Redesign the work','Frontline teams help change the process so it sticks.'],['Lock in results','Targets move into budgets and monthly reviews.']],
+        out: 'Savings that finance signs off on and operations can keep.' },
+      digital: { n: 'Digital and AI', lead: 'From the first use case to the platform behind it.',
+        steps: [['Pick the bets','We choose the few use cases that move revenue or margin.'],['Build and prove','Small teams ship working tools to real users in weeks.'],['Scale it','Data, people and process change so the gains spread.']],
+        out: 'A short list of live products with a clear financial result each.' },
+      mergers: { n: 'Mergers and acquisitions', lead: 'Diligence, deal design and the first 100 days after close.',
+        steps: [['Test the thesis','We check whether the deal creates the value the model says it will.'],['Design the deal','Structure, price and the plan for combining the companies.'],['Integrate','A single team runs the first 100 days, where most value is won or lost.']],
+        out: 'A deal that pays back what was promised, on the date it was promised.' },
+      organization: { n: 'Organization and talent', lead: 'Structure, leadership and culture built around the strategy.',
+        steps: [['Diagnose','We map how decisions are really made today.'],['Redesign','Roles, layers and incentives that fit the strategy.'],['Build leaders','Coaching and tools for the people who carry the change.']],
+        out: 'Faster decisions, clearer roles and a team that wants to stay.' },
+      sustainability: { n: 'Sustainability', lead: 'A practical path to lower emissions and lower cost at the same time.',
+        steps: [['Set the baseline','A clear picture of emissions, cost and risk by site and product.'],['Build the case','Each step has a business case, not just a target.'],['Deliver','Projects run like any other capital program, with owners and dates.']],
+        out: 'Real emissions cuts that show up in the profit line.' }
+    };
+
+    function esc(s) { return String(s); }
+    var NAME = 'Northvale Advisory';
+    var CTA = '<section class="cta-band"><div class="wrap"><h2>Have a question like this one?</h2><a class="btn" href="#contact">Talk to a partner</a></div></section>';
+    function artSvg(i) {
+      var pts = ['20,300 90,260 150,270 210,190 280,150 340,80 385,50', '20,280 80,250 140,230 200,235 260,170 320,150 385,90', '20,310 100,300 160,240 220,200 270,210 330,120 385,70', '20,250 70,290 140,200 200,230 270,130 330,150 385,60'][i % 4];
+      return '<svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="220" fill="#0B3B8C"/><g stroke="#A8C7FA" opacity=".4"><path d="M0 60H400M0 110H400M0 160H400"/></g><polyline transform="translate(0,-70)" points="' + pts + '" fill="none" stroke="#fff" stroke-width="4"/><polygon transform="translate(0,-70)" points="' + pts + ' 385,320 20,320" fill="#2251FF" opacity=".55"/></svg>';
+    }
+    function heroArt() { return '<svg viewBox="0 0 600 600" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><polygon points="600,80 600,600 150,600" fill="#0B3B8C" opacity=".6"/><polygon points="600,260 600,600 340,600" fill="#2251FF" opacity=".6"/><polygon points="600,440 600,600 480,600" fill="#A8C7FA" opacity=".8"/></svg>'; }
+    function related(keys) {
+      return '<section><div class="wrap"><h2 class="rel-head">Related thinking</h2><div class="cards" style="margin-top:0">' + keys.map(function (k) { var a = ARTICLES[k]; return '<a class="card" href="#a-' + k + '"><span class="eyebrow">' + a.tag + '</span><h3>' + a.title + '</h3><p>' + a.dek + '</p><span class="meta">' + a.kind + ' &middot; ' + a.time + '</span></a>'; }).join('') + '</div></div></section>';
+    }
+    function pgArticle(k) {
+      var a = ARTICLES[k], idx = AKEYS.indexOf(k);
+      var body = a.body.map(function (p) { if (typeof p === 'string') return '<p>' + p + '</p>'; if (p[0] === 'quote') return '<blockquote>' + p[1] + '</blockquote>'; return '<h2>' + p[1] + '</h2>'; }).join('');
+      var others = AKEYS.filter(function (x) { return x !== k; }).slice(0, 3);
+      return { title: a.title, html:
+        '<section class="art-hero"><div class="wrap"><div class="crumbs"><a href="#">Home</a> / <a href="#all-insights">Insights</a> / ' + a.tag + '</div><span class="eyebrow" style="color:var(--sky)">' + a.kind + '</span><h1>' + a.title + '</h1><div class="by">' + a.kind + ' &middot; ' + a.time + ' &middot; Northvale partners</div></div></section>' +
+        '<div class="art-fig">' + artSvg(idx) + '</div>' +
+        '<article class="prose"><p style="font-size:1.45rem;color:var(--muted)">' + a.dek + '</p>' + body + '<div class="takeaways"><h3>Key takeaways</h3><ul>' + a.take.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></div><a class="arrow-link" href="#all-insights">Back to all insights</a></article>' +
+        CTA + related(others) };
+    }
+    function pgInd(k) {
+      var d = INDS[k];
+      return { title: d.n, html:
+        '<section class="pg-hero">' + heroArt() + '<div class="wrap"><div class="crumbs"><a href="#">Home</a> / <a href="#industries">Industries</a> / ' + d.n + '</div><span class="eyebrow" style="color:var(--sky)">Industry</span><h1>' + d.n + '</h1><p class="lead">' + d.lead + '</p></div></section>' +
+        '<section><div class="wrap"><h2 class="rel-head">What we are seeing</h2><div class="three">' + d.see.map(function (s) { return '<div><h3>' + s[0] + '</h3><p>' + s[1] + '</p></div>'; }).join('') + '</div></div></section>' +
+        '<section class="caps"><div class="wrap two-col"><div><span class="eyebrow">How we help</span><h2 style="margin-top:.9rem">Work that moves the numbers</h2></div><ol class="steps">' + d.help.map(function (h) { return '<li><span style="font:500 1.3rem var(--serif)">' + h + '</span></li>'; }).join('') + '</ol></div></section>' +
+        '<section><div class="wrap"><div class="sample"><b>Sample engagement</b><p>' + d.sample + '</p></div></div></section>' +
+        CTA + related(d.rel) };
+    }
+    function pgServ(k) {
+      var s = SERV[k];
+      return { title: s.n, html:
+        '<section class="pg-hero">' + heroArt() + '<div class="wrap"><div class="crumbs"><a href="#">Home</a> / <a href="#capabilities">What we do</a> / ' + s.n + '</div><span class="eyebrow" style="color:var(--sky)">Capability</span><h1>' + s.n + '</h1><p class="lead">' + s.lead + '</p></div></section>' +
+        '<section><div class="wrap two-col"><div><span class="eyebrow">Our approach</span><h2 style="margin-top:.9rem">Three steps, one team</h2></div><ol class="steps">' + s.steps.map(function (x) { return '<li><div><h3 style="font-size:1.5rem;margin-bottom:.4rem">' + x[0] + '</h3><p style="color:var(--muted)">' + x[1] + '</p></div></li>'; }).join('') + '</ol></div></section>' +
+        '<section><div class="wrap" style="padding-top:0"><div class="sample"><b>What you get</b><p>' + s.out + '</p></div></div></section>' +
+        CTA + related(['cost', 'growth', 'ai']) };
+    }
+    function pgAll() {
+      return { title: 'Insights', html:
+        '<section class="pg-hero">' + heroArt() + '<div class="wrap"><div class="crumbs"><a href="#">Home</a> / Insights</div><span class="eyebrow" style="color:var(--sky)">Our insights</span><h1>What we are thinking about now</h1></div></section>' +
+        '<section><div class="wrap"><div class="all-list">' + AKEYS.map(function (k) { var a = ARTICLES[k]; return '<a href="#a-' + k + '"><span class="eyebrow">' + a.tag + '</span><div><h3>' + a.title + '</h3><p>' + a.dek + '</p></div><span class="meta">' + a.kind + ' &middot; ' + a.time + '</span></a>'; }).join('') + '</div></div></section>' + CTA };
+    }
+
+    // ---------- Router ----------
+    var HOME_ANCHORS = ['insights', 'capabilities', 'industries', 'careers', 'contact'];
+    var home = $('#home'), page = $('#page');
+    function route() {
+      var h = decodeURIComponent((location.hash || '').slice(1)), pg = null, m;
+      if (h === 'all-insights') pg = pgAll();
+      else if ((m = h.match(/^a-(.+)$/)) && ARTICLES[m[1]]) pg = pgArticle(m[1]);
+      else if ((m = h.match(/^i-(.+)$/)) && INDS[m[1]]) pg = pgInd(m[1]);
+      else if ((m = h.match(/^s-(.+)$/)) && SERV[m[1]]) pg = pgServ(m[1]);
+      if (pg) {
+        page.innerHTML = pg.html; page.hidden = false; home.hidden = true;
+        document.title = pg.title + ' | ' + NAME;
+        window.scrollTo(0, 0);
+        var h1 = page.querySelector('h1'); if (h1) { h1.tabIndex = -1; h1.focus({ preventScroll: true }); }
+      } else {
+        var wasPage = !page.hidden;
+        page.hidden = true; page.innerHTML = ''; home.hidden = false; document.title = NAME;
+        var el = HOME_ANCHORS.indexOf(h) > -1 ? document.getElementById(h) : null;
+        if (el) { el.scrollIntoView({ behavior: wasPage || reduce ? 'auto' : 'smooth' }); }
+        else if (wasPage || !h) { window.scrollTo(0, 0); }
+      }
+    }
+    window.addEventListener('hashchange', route);
+    route();
+
+    var items = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .1 });
+      items.forEach(function (el) { if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pre'); io.observe(el); } });
+    }
+  })();
+</script>
+
+</body>
+</html>
